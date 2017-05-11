@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Leaflet UTM Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+      crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"
+      integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA=="
+      crossorigin=""></script>
+
+    <style type="text/css">
+        html, body { width: 100%; height: 100%; margin: 0; }
+        #map, #container { width: 70%; height: 70%; margin: 20px; }
+    </style>
+</head>
+
+<body>
+    <br>
+    <div id="map"></div>
+
+    <script src="../L.LatLng.UTM.js"></script>
+
+    <script type="text/javascript">
+        var center = [37.056019, -3.365688];
+
+        var options = {
+            attribution:
+                '<a href="http://openstreetmap.org/copyright"</a> &copy; ' +
+                'OpenStreetmap Contributors',
+            subdomains: 'abc',
+            minZoom: 0,
+            maxZoom: 20
+        };
+
+        var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', options);
+
+        var map = L.map('map', {
+            layers: [osm],
+            center: center,
+            zoom: 14
+        });
+
+        var fun = function(t) {
+            t.bindPopup(t.getLatLng().utmStr(), { autoClose: false }).openPopup();
+        };
+
+        var marker = L.marker(center, {draggable: true}).addTo(map);
+        
+        map.on('click', function(e){
+            var marker = new L.Marker(e.latlng, { draggable: true }).addTo(map);
+            fun(marker);
+        });
+
+        fun(marker);
+
+        marker.on('click', function (e) {
+            fun(e.target);
+        });
+
+        marker.on('dragend', function (e) {
+            fun(e.target);
+        });
+
+    </script>
+</body>
+</html>
