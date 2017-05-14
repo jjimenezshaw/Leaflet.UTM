@@ -51,9 +51,9 @@
         });
 
         var fun = function(t) {
-            var opts = document.getElementById("opts").value;
+            var opts = document.getElementById('opts').value;
             var opt = JSON.parse(opts)
-            t.bindPopup(t.getLatLng().utm().toString(opt), { autoClose: false }).openPopup();
+            t.bindPopup(t.getLatLng().utm().toString(opt), {autoClose: false}).openPopup();
 
             // update last point info
 
@@ -69,29 +69,29 @@
             txt += 'Original == UTM-latLng: ' + p.equals(other) + '<br>';
 
             // for proj4
-            var utm = "+proj=utm +zone=" + o.zone + (o.southHemi ? '+south' : '');
-            var wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
-            var pj = proj4(wgs84,utm, [t.getLatLng().lng, t.getLatLng().lat]);
+            var utm = '+proj=utm +zone=' + o.zone + (o.southHemi ? '+south' : '');
+            var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+            var pj = proj4(wgs84, utm, [t.getLatLng().lng, t.getLatLng().lat]);
             txt += 'proj4: ' + pj[0] + ', ' + pj[1] + '<br>';
             var margin = Math.max(Math.abs(o.x - pj[0]), Math.abs(o.y - pj[1]));
             txt += 'proj4 == UTM (< 0.001): ' + (margin < 0.001) + ' | err: ' + margin;
-            document.getElementById("res").innerHTML = txt;
+            document.getElementById('res').innerHTML = txt;
         };
 
         var create = function(ll) {
-            var marker = new L.Marker(ll, { draggable: true }).addTo(map);
-            marker.on('dblclick', function (e) {
+            var marker = new L.Marker(ll, {draggable: true}).addTo(map);
+            marker.on('dblclick', function(e) {
                 map.removeLayer(marker);
             });
 
-            marker.on('dragend', function (e) {
+            marker.on('dragend', function(e) {
                 fun(e.target);
             });
             fun(marker);
         }
         create(center);
         
-        map.on('click', function(e){
+        map.on('click', function(e) {
             create(e.latlng);
         });
 
