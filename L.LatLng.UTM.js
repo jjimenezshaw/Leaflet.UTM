@@ -3,36 +3,98 @@
  * and print with the desired format
  */
 
-(function () {
+(function (L) {
+    if (typeof L === 'undefined') {
+        throw new Error('Leaflet must be included first');
+    }
 
-    L.LatLng.prototype.utmObj = function () {
-        var ret = UC().LatLon2UTM(this.lat, this.lng);
-        return ret;
+    // Constructor for 'class' L.Utm
+    L.Utm = function(x, y, zone, band, southHemi) {
+        this.x = x;
+        this.y = y;
+        this.zone = zone;
+        this.band = band;
+        this.southHemi = southHemi;
     };
 
-    L.LatLng.prototype.utmStr = function (options) {
-        options = L.extend({
-            fix: 1,
-            sep: ',',
-            format: '{x}{sep} {y}{sep} {zone}{band} {hemi} {datum}',
-            north: 'North',
-            south: 'South'
-        }, options);
+    L.Utm.prototype = {
+        // convert to string. Using the options you can
+        // specify another format.
+        toString: function(options) {
+            options = L.extend({
+                fix: 1,
+                sep: ',',
+                format: '{x}{sep} {y}{sep} {zone}{band}{sep} {datum}',
+                north: 'North',
+                south: 'South'
+            }, options);
 
-        var o = this.utmObj();
-        o.x = o.x.toFixed(options.fix);
-        o.y = o.y.toFixed(options.fix);
-        o.hemi = o.southHemi ? options.south : options.north;
-        o.sep = options.sep;
-        o.datum = 'WGS84';
+            var o = this.dic();
+            o.x = o.x.toFixed(options.fix);
+            o.y = o.y.toFixed(options.fix);
+            o.hemi = o.southHemi ? options.south : options.north;
+            o.sep = options.sep;
+            o.datum = 'WGS84';
 
-        var ret = L.Util.template(options.format, o); 
-        ret += "<br>" + UC().LatLon2UTMstr(this.lat, this.lng);
-        return ret;
+            return L.Util.template(options.format, o);
+        },
+
+        // returns a L.LatLng object
+        latLng: function() {
+            var ll = UC().UTM2LatLon(this);
+            return L.latLng(ll);
+        },
+
+        // convert to L.LatLng to check equality
+        equals: function(other) {
+            return this.latLng().equals(other.latLng());
+        },
+
+        // returns a simple dictionary,
+        // with optional easting and northing values.
+        dic: function(eastingNorthing) {
+            var ret = {
+                x: this.x,
+                y: this.y,
+                zone: this.zone,
+                band: this.band,
+                southHemi: this.southHemi
+            };
+            if (eastingNorthing) {
+                ret.easting = this.x;
+                ret.northing = this.y;
+            }
+            return ret;
+        }
     };
+
+    // factory to create Utm instances.
+    L.utm = function(x, y, zone, band, southHemi) {
+        if (x instanceof L.Utm) {
+            return x;
+        }
+        if (typeof x === 'object' && 'x' in x && 'y' in x && 'zone' in x) {
+            return new L.Utm(x.x, x.y, x.zone, x.band, x.southHemi);
+        }
+        if (x === undefined || x === null) {
+            return x;
+        }
+        return new L.Utm(x, y, zone, band, southHemi);
+    };
+
+    ////////////////////////////
+    // Prototype in LatLng to get an Utm object.
+    L.LatLng.prototype.utm = function () {
+        var dic = UC().LatLon2UTM(
+            this.lat,
+            L.Util.wrapNum(this.lng, [-180, 180], true));
+        return L.utm(dic);
+    };
+
 
     /////////////////////////////
     // from http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html
+    // Try to keep as unmodified as possible
     function UC() {
         var pi = 3.14159265358979;
 
@@ -455,41 +517,9 @@
             return;
         }
 
+        // Original code until here
         ////////////////////////////
 
-        function LatLon2UTMstr(lat, lon) {
-            var xy = new Array(2);
-            var zone = Math.floor((lon + 180.0) / 6) + 1;
-            zone = LatLonToUTMXY(DegToRad(lat), DegToRad(lon), zone, xy);
-            var NS = "N";
-            if (lat < 0) NS = "S";
-            var str = " " + zone + NS + ", " + xy[0].toFixed(1) + ", " + xy[1].toFixed(1);
-            return str;
-        }
-
-        function bands() {
-            return "CDEFGHJKLMNPQRSTUVWX";
-        }
-
-        function LatLon2UTM(lat, lon) {
-            var bandIdx = Math.floor((lat + 80.0) / 8);
-            var band = bands().charAt(bandIdx);
-            var zone = Math.floor((lon + 180.0) / 6) + 1;
-            
-            // Norway exception:
-            if (band === 'V' && lon > 3 && lon < 6) zone = 32;
-            
-            var xy = new Array(2);
-            zone = LatLonToUTMXY(DegToRad(lat), DegToRad(lon), zone, xy);
-            var ret = {
-                x: xy[0],
-                y: xy[1],
-                zone: zone,
-                band: band,
-                southHemi: lat < 0
-            };
-            return ret;
-        }
 
         function check_latlon(latlon) {
             var lat =latlon[0];
@@ -498,10 +528,7 @@
             if (Math.abs(lon) > 2*pi) throw 'Wrong longitude ' + lon;
         }
 
-        function check_UTMinput(x, y, zone, ns) {
-            if (ns != 'N' && ns != 'S') {
-                throw 'Wrong North-South identifier ' + ns;
-            }
+        function check_UTMinput(x, y, zone, southHemi) {
             var parsed_zone = parseInt(zone);
             if (isNaN(parsed_zone)) {
                 throw 'Invalid zone ' + zone;
@@ -517,7 +544,7 @@
             if (p_x < 0 || p_x > 1e6) {
                 throw 'X value out of range (' + x + ')';
             }
-            if (ns == 'N') {
+            if (!southHemi) {
                 if (p_y < 0 || p_y > 9.4e6) {
                     throw 'Y value out of range (' + y + ')';
                 }
@@ -528,20 +555,53 @@
             }
         }
 
-        function UTM2LatLon(x, y, zone, ns) {
-            check_UTMinput(x, y, zone, ns);
-            var southhemi = (ns == 'S');
+        function bands() {
+            return "CDEFGHJKLMNPQRSTUVWX";
+        }
+
+        function UTM2LatLon(utm) {
+            if (utm.southHemi === undefined && utm.band === undefined) {
+                throw 'Undefined hemisphere in ' + utm.toString();
+            }
+            var southHemi = utm.southHemi;
+            var band = utm.band;
+            if (band && band.length == 1
+                && bands().indexOf(band.toUpperCase()) >= 0) {
+                southHemi = bands().indexOf(band.toUpperCase()) < 10;
+            }
+
+            check_UTMinput(utm.x, utm.y, utm.zone, southHemi);
             var latlon = new Array(2);
-            UTMXYToLatLon(x, y, zone, southhemi, latlon);
+            UTMXYToLatLon(utm.x, utm.y, utm.zone, southHemi, latlon);
             check_latlon(latlon);
-            return {lat:RadToDeg(latlon[0]), lng:RadToDeg(latlon[1])};
+            return { lat: RadToDeg(latlon[0]), lng: RadToDeg(latlon[1]) };
+        }
+
+        function LatLon2UTM(lat, lon) {
+            var bandIdx = Math.floor((lat + 80.0) / 8);
+            var band = bands().charAt(bandIdx);
+            var zone = Math.floor((lon + 180.0) / 6) + 1;
+
+            // Norway exception:
+            if (band === 'V' && lon > 3 && lon < 7) zone = 32;
+
+            var xy = new Array(2);
+            zone = LatLonToUTMXY(DegToRad(lat), DegToRad(lon), zone, xy);
+            // This is the object returned
+            var ret = {
+                x: xy[0],
+                y: xy[1],
+                zone: zone,
+                band: band,
+                southHemi: lat < 0
+            };
+            return ret;
         }
 
         return {
-            LatLon2UTMstr:LatLon2UTMstr,
             LatLon2UTM:LatLon2UTM,
             UTM2LatLon:UTM2LatLon,
         };
     }
 
-})();
+})(L);
