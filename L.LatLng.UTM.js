@@ -22,7 +22,7 @@
         // specify another format.
         toString: function(options) {
             options = L.extend({
-                fix: 1,
+                decimals: 1,
                 sep: ',',
                 format: '{x}{sep} {y}{sep} {zone}{band}{sep} {datum}',
                 north: 'North',
@@ -30,8 +30,8 @@
             }, options);
 
             var o = this.dic();
-            o.x = o.x.toFixed(options.fix);
-            o.y = o.y.toFixed(options.fix);
+            o.x = o.x.toFixed(options.decimals);
+            o.y = o.y.toFixed(options.decimals);
             o.hemi = o.southHemi ? options.south : options.north;
             o.sep = options.sep;
             o.datum = 'WGS84';
