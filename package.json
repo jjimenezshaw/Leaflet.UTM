@@ -29,7 +29,8 @@
     "leaflet": "^1.0.3",
     "mocha": "^2.4.5",
     "mocha-phantomjs-core": "^2.0.1",
-    "phantomjs-prebuilt": "^2.1.4"
+    "phantomjs-prebuilt": "^2.1.4",
+    "proj4": "2.4.3"
   },
   "author": "Javier Jimenez Shaw",
   "contributors": [
