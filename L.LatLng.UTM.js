@@ -84,10 +84,12 @@
 
     ////////////////////////////
     // Prototype in LatLng to get an Utm object.
-    L.LatLng.prototype.utm = function () {
+    // if zone is null, it is calculated.
+    L.LatLng.prototype.utm = function (zone) {
         var dic = UC().LatLon2UTM(
             this.lat,
-            L.Util.wrapNum(this.lng, [-180, 180], true));
+            L.Util.wrapNum(this.lng, [-180, 180], true),
+            zone);
         return L.utm(dic);
     };
 
@@ -95,6 +97,7 @@
     /////////////////////////////
     // from http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html
     // Try to keep as unmodified as possible
+    /*eslint-disable */
     function UC() {
         var pi = 3.14159265358979;
 
@@ -517,6 +520,7 @@
             return;
         }
 
+        /*eslint-enable */
         // Original code until here
         ////////////////////////////
 
@@ -555,8 +559,13 @@
             }
         }
 
-        function bands() {
-            return "CDEFGHJKLMNPQRSTUVWX";
+        var bands = 'CDEFGHJKLMNPQRSTUVWX';
+        var nBandIdx = bands.indexOf('N');
+
+        function calcBand(lat) {
+            if (lat < -80.0 || lat > 84.0 ) return ''
+            var bandIdx = Math.floor((lat + 80.0) / 8);
+            return bands.charAt(bandIdx) || 'X'; // cover extra X band
         }
 
         function UTM2LatLon(utm) {
@@ -566,24 +575,40 @@
             var southHemi = utm.southHemi;
             var band = utm.band;
             if (band && band.length == 1
-                && bands().indexOf(band.toUpperCase()) >= 0) {
-                southHemi = bands().indexOf(band.toUpperCase()) < 10;
+                && bands.indexOf(band.toUpperCase()) >= 0) {
+                southHemi = bands.indexOf(band.toUpperCase()) < nBandIdx;
             }
 
-            check_UTMinput(utm.x, utm.y, utm.zone, southHemi);
+            //check_UTMinput(utm.x, utm.y, utm.zone, southHemi);
             var latlon = new Array(2);
             UTMXYToLatLon(utm.x, utm.y, utm.zone, southHemi, latlon);
-            check_latlon(latlon);
+            //check_latlon(latlon);
+            if (Math.abs(latlon[0]) > pi/2)  return null;
             return { lat: RadToDeg(latlon[0]), lng: RadToDeg(latlon[1]) };
         }
 
-        function LatLon2UTM(lat, lon) {
-            var bandIdx = Math.floor((lat + 80.0) / 8);
-            var band = bands().charAt(bandIdx);
-            var zone = Math.floor((lon + 180.0) / 6) + 1;
+        function LatLon2UTM(lat, lon, zone) {
+            var band = calcBand(lat);
+            if (lon == 180.0 && !zone) zone = 60;
+            zone = zone || Math.floor((lon + 180.0) / 6) + 1;
 
             // Norway exception:
             if (band === 'V' && lon > 3 && lon < 7) zone = 32;
+            // Special zones for Svalbard
+            if (band === 'X') {
+                if (lon >= 0.0 && lon < 9.0) {
+                    zone = 31;
+                }
+                else if (lon >= 9.0 && lon < 21.0) {
+                    zone = 33;
+                }
+                else if (lon >= 21.0 && lon < 33.0) {
+                    zone = 35;
+                }
+                else if (lon >= 33.0 && lon < 42.0) {
+                    zone = 37;
+                }
+            }
 
             var xy = new Array(2);
             zone = LatLonToUTMXY(DegToRad(lat), DegToRad(lon), zone, xy);
