@@ -65,6 +65,10 @@
                 ret.northing = this.y;
             }
             return ret;
+        },
+
+        clone: function() {
+            return L.utm(this);
         }
     };
 
@@ -568,6 +572,31 @@
             return bands.charAt(bandIdx) || 'X'; // cover extra X band
         }
 
+        function calcZone(band, lon) {
+            var zone = Math.floor((lon + 180.0) / 6) + 1;
+            if (lon == 180.0) zone = 60;
+
+            if (band === 'V' && lon > 3.0 && lon < 7.0) {
+                // Norway exception:
+                zone = 32;
+            } else if (band === 'X') {
+                // Special zones for Svalbard
+                if (lon >= 0.0 && lon < 9.0) {
+                    zone = 31;
+                }
+                else if (lon >= 9.0 && lon < 21.0) {
+                    zone = 33;
+                }
+                else if (lon >= 21.0 && lon < 33.0) {
+                    zone = 35;
+                }
+                else if (lon >= 33.0 && lon < 42.0) {
+                    zone = 37;
+                }
+            }
+            return zone;
+        }
+
         function UTM2LatLon(utm) {
             if (utm.southHemi === undefined && utm.band === undefined) {
                 throw 'Undefined hemisphere in ' + utm.toString();
@@ -589,26 +618,7 @@
 
         function LatLon2UTM(lat, lon, zone) {
             var band = calcBand(lat);
-            if (lon == 180.0 && !zone) zone = 60;
-            zone = zone || Math.floor((lon + 180.0) / 6) + 1;
-
-            // Norway exception:
-            if (band === 'V' && lon > 3 && lon < 7) zone = 32;
-            // Special zones for Svalbard
-            if (band === 'X') {
-                if (lon >= 0.0 && lon < 9.0) {
-                    zone = 31;
-                }
-                else if (lon >= 9.0 && lon < 21.0) {
-                    zone = 33;
-                }
-                else if (lon >= 21.0 && lon < 33.0) {
-                    zone = 35;
-                }
-                else if (lon >= 33.0 && lon < 42.0) {
-                    zone = 37;
-                }
-            }
+            zone = zone || calcZone(band, lon);
 
             var xy = new Array(2);
             zone = LatLonToUTMXY(DegToRad(lat), DegToRad(lon), zone, xy);
