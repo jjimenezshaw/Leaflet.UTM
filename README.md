@@ -1,4 +1,5 @@
 # Leaflet.UTM
+[![Build Status](https://travis-ci.org/jjimenezshaw/Leaflet.UTM.png)](https://travis-ci.org/jjimenezshaw/Leaflet.UTM)
 
 **This code is not yet production ready.
 Don't use it but for testing purposes.
