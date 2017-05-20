@@ -37,8 +37,10 @@ You can also specify the hemisphere if you don't know the band, with `southHemi`
 ## API
 ### `L.LatLng.utm`
 Extends the class `L.LatLng` with the method `utm([zone])`. If zone is not provided, or 0, it is computed based on latitude and longitude (recommended). This method returns an object of class `L.Utm`.
+
 ### `L.Utm`
 Defines a class to deal with UTM coordinates. The available methods are:
+
 #### `toString([options])`
 Converts the UTM coordinates into a string. The available options are:
   * decimals: number of decimals for x and y. Default 1.
@@ -51,8 +53,22 @@ Converts the UTM coordinates into a string. The available options are:
     * `{hemi}`: Hemisphere, north or south (see options below)
     * `{sep}`: separator
   * sep: separator used in the format. Default ','
-  * north: string used in the format for field `{hemi}` in the north hemisphere.
-  * south: string used in the format for field `{hemi}` in the south hemisphere.
+  * north: string used in the format for field `{hemi}` in the north hemisphere. Default 'North'.
+  * south: string used in the format for field `{hemi}` in the south hemisphere. Default 'South'
+  
+This method is automatically used by javascript when need to convert to string, for instance, when adding to another string.
+
+#### `latLng()`
+Creates an L.LatLng object, converting the UTM coordinates. If both `band` and `southHemi` attributes are defined, `band` has priority to determine the hemisphere, and therefore the latitude.
+
+#### `equals(other)`
+Compares the object with `other`.
+
+#### `clone()`
+Creates a copy of itself.
+
+#### Factory `L.utm(...)` 
+Creates an utm object. Accepts an object with attribures: x, y, zone, band, southHemi.
 
 ## Running tests
 Install dependencies and run tests:
