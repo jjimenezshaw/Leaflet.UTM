@@ -39,4 +39,39 @@ describe('L.UTM', function() {
             }
         });
     });
+
+    describe('Known points', function() {
+        it('Equator', function() {
+            var el = L.latLng(0, 0).utm();
+            el.should.have.property('x').closeTo(166021.443, 0.001);
+            el.should.have.property('y').equal(0);
+
+            el = L.latLng(0, 3).utm();
+            el.should.have.property('x').equal(500000);
+            el.should.have.property('y').equal(0);
+        });
+    });
+
+    describe('Fixtures', function() {
+        it('data1 (' + data1.length + ')', function() {
+            data1.forEach(function(item) {
+                var el = L.latLng(item).utm();
+                var utm = L.utm(item);
+                el.should.have.property('x').closeTo(utm.x, item.margin);
+                el.should.have.property('y').closeTo(utm.y, item.margin);
+                el.should.have.property('zone').equal(utm.zone);
+                el.should.have.property('band').equal(utm.band);
+                el.should.have.property('southHemi').equal(utm.southHemi);
+                utm.equals(el).should.be.true;
+            });
+        });
+
+        it('formats (' + formats.length + ')', function() {
+            formats.forEach(function(item) {
+                var utm = L.utm(item);
+                utm.toString(item).should.be.equal(item.txt, item.msg);
+            });
+        });
+    });
+
 });

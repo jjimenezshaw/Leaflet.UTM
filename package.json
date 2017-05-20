@@ -22,6 +22,7 @@
     "UTM"
   ],
   "devDependencies": {
+    "blanket": "^1.1.7",
     "chai": "~3.5.0",
     "chai-leaflet": "0.0.12",
     "eslint": "^2.10.2",
