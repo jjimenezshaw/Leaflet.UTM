@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Leaflet UTM Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+      crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"
+      integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA=="
+      crossorigin=""></script>
+
+    <style type="text/css">
+        #map { width: 70%; height: 400px; margin: 20px; }
+        #latlng2utm
+    </style>
+</head>
+
+<body>
+    <br>
+    <form id="frm1" action="">
+      Latitude: <input type="text" name="lat" value="0">
+      Longitude: <input type="text" name="lng" value="0">
+      <input type="button" onclick="clickBtn()" value="Convert">
+      UTM: <span id="result1"></span>
+    </form>
+
+    <div id="map"></div>
+
+    <script src="../L.LatLng.UTM.js"></script>
+
+    <script type="text/javascript">
+
+        function clickBtn() {
+            var lat = document.forms.frm1.elements.lat.value;
+            var lng = document.forms.frm1.elements.lng.value;
+            var ll = L.latLng(lat, lng);
+            var text = '' + ll.utm();
+            marker.setLatLng(ll).bindPopup(text).openPopup()
+            document.getElementById('result1').innerHTML = text;
+        }
+
+        var options = {
+            attribution:
+                '<a href="http://openstreetmap.org/copyright"</a> &copy; ' +
+                'OpenStreetmap Contributors',
+            subdomains: 'abc',
+            minZoom: 0,
+            maxZoom: 23
+        };
+
+        var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', options);
+        var map = L.map('map', {layers: [osm], center: [0, 0], zoom: 2});
+        var marker = new L.Marker([0, 0]).addTo(map);
+        clickBtn();
+    </script>
+</body>
+</html>
