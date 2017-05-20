@@ -39,7 +39,20 @@ You can also specify the hemisphere if you don't know the band, with `southHemi`
 Extends the class `L.LatLng` with the method `utm([zone])`. If zone is not provided, or 0, it is computed based on latitude and longitude (recommended). This method returns an object of class `L.Utm`.
 ### `L.Utm`
 Defines a class to deal with UTM coordinates. The available methods are:
---- to be done ---
+#### `toString([options])`
+Converts the UTM coordinates into a string. The available options are:
+  * decimals: number of decimals for x and y. Default 1.
+  * format: string defining the format to use. Default `'{x}{sep} {y}{sep} {zone}{band}{sep} {datum}'`, where:
+    * `{x}`: easting
+    * `{y}`: northing
+    * `{zone}`: UTM zone, value between 1 and 60
+    * `{band}`: Band letter, between C and X
+    * `{datum}`: WGS84
+    * `{hemi}`: Hemisphere, north or south (see options below)
+    * `{sep}`: separator
+  * sep: separator used in the format. Default ','
+  * north: string used in the format for field `{hemi}` in the north hemisphere.
+  * south: string used in the format for field `{hemi}` in the south hemisphere.
 
 ## Running tests
 Install dependencies and run tests:
