@@ -10,8 +10,8 @@
 
     // Constructor for 'class' L.Utm
     L.Utm = function(x, y, zone, band, southHemi) {
-        this.x = x;
-        this.y = y;
+        this.x = +x;
+        this.y = +y;
         this.zone = zone;
         this.band = band;
         this.southHemi = southHemi;
