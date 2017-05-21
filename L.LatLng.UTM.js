@@ -89,14 +89,14 @@
 
     // factory to create Utm instances.
     L.utm = function(x, y, zone, band, southHemi) {
+        if (x === undefined || x === null) {
+            return x;
+        }
         if (x instanceof L.Utm) {
             return x;
         }
         if (typeof x === 'object' && 'x' in x && 'y' in x && 'zone' in x) {
             return new L.Utm(x.x, x.y, x.zone, x.band, x.southHemi);
-        }
-        if (x === undefined || x === null) {
-            return x;
         }
         return new L.Utm(x, y, zone, band, southHemi);
     };

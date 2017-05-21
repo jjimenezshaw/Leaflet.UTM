@@ -50,6 +50,40 @@ describe('L.UTM', function() {
             el.should.have.property('x').equal(500000);
             el.should.have.property('y').equal(0);
         });
+        it('Change zone', function() {
+            var ll = L.latLng(44.977061239360594, -3.341408332015574);
+            var utm = ll.utm(31);
+            utm.should.have.property('x').closeTo(0, 0.003);
+            utm.should.have.property('y').closeTo(5000000, 0.003);
+            utm.should.have.property('zone').equal(31);
+            utm.should.have.property('band').equal('T');
+            utm.should.have.property('southHemi').equal(false);
+
+            utm = utm.normalize();
+            utm.should.have.property('x').closeTo(473081.1, 0.1);
+            utm.should.have.property('y').closeTo(4980458.9, 0.1);
+            utm.should.have.property('zone').equal(30);
+            utm.should.have.property('band').equal('T');
+            utm.should.have.property('southHemi').equal(false);
+        });
+    });
+
+    describe('Exceptions and nulls', function() {
+        it('Exceptions', function() {
+            var utm = L.utm({x: 0, y: 0, zone: 31});
+            (function() {utm.latLng();}).should.throw(Error);
+            (function() {utm.latLng(true);}).should.not.throw(Error);
+            chai.should().equal(null, utm.latLng(true));
+        });
+        it('Nulls', function() {
+            var utm = L.utm({x: 0, y: 0, zone: 31});
+            chai.should().equal(null, utm.latLng(true));
+            chai.should().equal(null, utm.normalize());
+            chai.should().equal(null, L.utm(null));
+            chai.should().equal(undefined, L.utm());
+            var bad = L.utm({x: 0, y: 1e9, zone: 31, southHemi: false});
+            chai.should().equal(null, bad.latLng());
+        });
     });
 
     describe('Fixtures', function() {
