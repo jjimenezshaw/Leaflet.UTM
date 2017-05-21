@@ -9,6 +9,8 @@ Simple UTM (WGS84) methods for L.LatLng. Tested with Leaflet 1.0.3.
 
 Based on javascript code from http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html by Chuck Taylor.
 
+[Simple example in action](https://jjimenezshaw.github.io/Leaflet.UTM/examples/input.html)
+
 ## Installation
 To be done, once it is finished.
 
@@ -59,16 +61,19 @@ Converts the UTM coordinates into a string. The available options are:
 This method is automatically used by javascript when need to convert to string, for instance, when adding to another string.
 
 #### `latLng()`
-Creates an L.LatLng object, converting the UTM coordinates. If both `band` and `southHemi` attributes are defined, `band` has priority to determine the hemisphere, and therefore the latitude.
+Creates an L.LatLng object, converting the UTM coordinates. If both `band` and `southHemi` attributes are defined, `band` has priority to determine the hemisphere, and therefore the latitude. If neither `band` nor `southHemi` are defined, an exception is thrown. Returns a `null` object if converted latitude is out of [-90, 90].
+
+#### `normalize()`
+Returns a new object, with the values on the proper zone, band, etc. Internally it converts to latLng and then to utm. Returns `null` if converted latitude is out of [-90, 90], or conversion is not possible.
 
 #### `equals(other)`
-Compares the object with `other`.
+Compares the object with `other`. It compares the lat and lng values, not the utm parameters (that means that both represent the same point in Earth). Returns false if any conversion is failing.
 
 #### `clone()`
 Creates a copy of itself.
 
 #### Factory `L.utm(...)` 
-Creates an utm object. Accepts an object with attribures: x, y, zone, band, southHemi.
+Creates an utm object. Accepts an object with attribures: x, y, zone, band, southHemi. This method does not check that input values make sense. You can set values far away from the proper zone, or wrong band. This may be obviously a problem when you call `latLng()` method. Values out of the zone but near work perfectly. Use the method `normalize()` to normalize it, or simply to check the input.
 
 ## Running tests
 Install dependencies and run tests:
