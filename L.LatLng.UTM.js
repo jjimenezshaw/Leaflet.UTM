@@ -50,6 +50,12 @@
             return this.latLng().equals(other.latLng());
         },
 
+        // returns a new object normalized to the proper zone, band...
+        normalize: function() {
+            var tmp = this.latLng();
+            return tmp ? tmp.utm() : null;
+        },
+
         // returns a simple dictionary,
         // with optional easting and northing values.
         dic: function(eastingNorthing) {
