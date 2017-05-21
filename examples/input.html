@@ -11,9 +11,32 @@
       crossorigin=""></script>
 
     <style type="text/css">
+        html { font-family: Helvetica, Verdana, Arial, sans-serif; }
         #map { width: 70%; height: 400px; margin: 20px; }
         form { margin: 20px; }
         .btn { margin: 20px; }
+        #center { margin: 20px; }
+
+        .crosshairs:before, .crosshairs:after {
+          content: '';
+          position: absolute;
+          width: 32px;
+          height: 32px;
+          z-index: 999;
+          pointer-events: none;
+        }
+        .crosshairs:before {
+          bottom: 50%;
+          left: 50%;
+          transform: translate(-50%, 0);
+          border-bottom: 1px #000 solid;
+        }
+        .crosshairs:after {
+          right: 50%;
+          top: 50%;
+          transform: translate(0, -50%);
+          border-right: 1px #000 solid;
+        }
     </style>
 </head>
 
@@ -35,7 +58,9 @@
       <span id="result2"></span>
     </form>
 
-    <div id="map"></div>
+    <div id="map" class="crosshairs"></div>
+
+    <div id="center">
 
     <script src="../L.LatLng.UTM.js"></script>
 
@@ -76,13 +101,19 @@
                 'OpenStreetmap Contributors',
             subdomains: 'abc',
             minZoom: 0,
-            maxZoom: 23
+            maxZoom: 19
         };
 
         var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', options);
         var map = L.map('map', {layers: [osm], center: [0, 0], zoom: 2});
         var marker = new L.Marker([0, 0]).addTo(map);
         toUTMBtn();
+
+        map.on('move', function(e) {
+            var c = map.getCenter();
+            document.getElementById('center').innerHTML = c + '<br>UTM: ' + c.utm();
+        });
+        map.fire('move');
     </script>
 </body>
 </html>
