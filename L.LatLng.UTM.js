@@ -40,19 +40,28 @@
         },
 
         // returns a L.LatLng object
-        latLng: function() {
-            var ll = UC().UTM2LatLon(this);
-            return L.latLng(ll);
+        latLng: function(noExcep) {
+            try {
+                var ll = UC().UTM2LatLon(this);
+                return L.latLng(ll);
+            } catch(e) {
+                if (noExcep) return null;
+                throw e;
+            }
         },
 
         // convert to L.LatLng to check equality
         equals: function(other) {
-            return this.latLng().equals(other.latLng());
+            try {
+                return this.latLng().equals(other.latLng());
+            } catch (e) {
+                return false;
+            }
         },
 
         // returns a new object normalized to the proper zone, band...
         normalize: function() {
-            var tmp = this.latLng();
+            var tmp = this.latLng(true);
             return tmp ? tmp.utm() : null;
         },
 
