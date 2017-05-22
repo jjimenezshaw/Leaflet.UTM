@@ -5,7 +5,7 @@
 Don't use it but for testing purposes.
 API may change without previous warning.**
 
-Simple UTM (WGS84) methods for L.LatLng. Tested with Leaflet 1.0.3.
+Simple [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (WGS84) methods for L.LatLng. Tested with Leaflet 1.0.3.
 
 Based on javascript code from http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html by Chuck Taylor.
 
