@@ -104,7 +104,7 @@
             maxZoom: 19
         };
 
-        var osm = L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', options);
+        var osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', options);
         var map = L.map('map', {layers: [osm], center: [0, 0], zoom: 2});
         var marker = new L.Marker([0, 0]).addTo(map);
         toUTMBtn();
