@@ -104,11 +104,12 @@
     ////////////////////////////
     // Prototype in LatLng to get an Utm object.
     // if zone is null, it is calculated.
-    L.LatLng.prototype.utm = function (zone) {
+    L.LatLng.prototype.utm = function (zone, southHemi) {
         var dic = UC().LatLon2UTM(
             this.lat,
             L.Util.wrapNum(this.lng, [-180, 180], true),
-            zone);
+            zone,
+            southHemi);
         return L.utm(dic);
     };
 
@@ -631,9 +632,11 @@
             return { lat: RadToDeg(latlon[0]), lng: RadToDeg(latlon[1]) };
         }
 
-        function LatLon2UTM(lat, lon, zone) {
+        function LatLon2UTM(lat, lon, zone, southHemi) {
             var band = calcBand(lat);
             zone = zone || calcZone(band, lon);
+            southHemi = (southHemi === undefined || southHemi === null) ?
+                lat < 0 : southHemi;
 
             var xy = new Array(2);
             zone = LatLonToUTMXY(DegToRad(lat), DegToRad(lon), zone, xy);
@@ -643,7 +646,7 @@
                 y: xy[1],
                 zone: zone,
                 band: band,
-                southHemi: lat < 0
+                southHemi: southHemi
             };
             return ret;
         }
