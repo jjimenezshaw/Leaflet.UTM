@@ -1,7 +1,7 @@
 {
   "name": "leaflet.utm",
   "version": "0.0.1",
-  "description": "converts LatLng to UTM WGS84",
+  "description": "Converts LatLng to UTM WGS84 in Leaflet",
   "main": "L.LatLng.UTM.js",
   "directories": {
     "test": "test"
