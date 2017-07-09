@@ -3,7 +3,7 @@
  * and print with the desired format
  */
 
-(function (L) {
+(function(L) {
     if (typeof L === 'undefined') {
         throw new Error('Leaflet must be included first');
     }
@@ -44,7 +44,7 @@
             try {
                 var ll = UC().UTM2LatLon(this);
                 return L.latLng(ll);
-            } catch(e) {
+            } catch (e) {
                 if (noExcep) return null;
                 throw e;
             }
@@ -104,7 +104,7 @@
     ////////////////////////////
     // Prototype in LatLng to get an Utm object.
     // if zone is null, it is calculated.
-    L.LatLng.prototype.utm = function (zone, southHemi) {
+    L.LatLng.prototype.utm = function(zone, southHemi) {
         var dic = UC().LatLon2UTM(
             this.lat,
             L.Util.wrapNum(this.lng, [-180, 180], true),
@@ -545,45 +545,11 @@
         ////////////////////////////
 
 
-        function check_latlon(latlon) {
-            var lat =latlon[0];
-            var lon =latlon[1];
-            if (Math.abs(lat) > pi/2) throw 'Wrong latitude ' + lat;
-            if (Math.abs(lon) > 2*pi) throw 'Wrong longitude ' + lon;
-        }
-
-        function check_UTMinput(x, y, zone, southHemi) {
-            var parsed_zone = parseInt(zone);
-            if (isNaN(parsed_zone)) {
-                throw 'Invalid zone ' + zone;
-            }
-            if (parsed_zone < 1 || parsed_zone > 60) {
-                throw 'Zone must be between 1 and 60 (' + zone + ')';
-            }
-            var p_x = parseFloat(x);
-            var p_y = parseFloat(y);
-            if (isNaN(p_x) || isNaN(p_y)) {
-                throw 'Invalid x or y (' + x + ',' + y + ')';
-            }
-            if (p_x < 0 || p_x > 1e6) {
-                throw 'X value out of range (' + x + ')';
-            }
-            if (!southHemi) {
-                if (p_y < 0 || p_y > 9.4e6) {
-                    throw 'Y value out of range (' + y + ')';
-                }
-            } else {
-                if (p_y < 1e6 || p_y > 10e6) {
-                    throw 'Y value out of range (' + y + ')';
-                }
-            }
-        }
-
         var bands = 'CDEFGHJKLMNPQRSTUVWX';
         var nBandIdx = bands.indexOf('N');
 
         function calcBand(lat) {
-            if (lat < -80.0 || lat > 84.0 ) return ''
+            if (lat < -80.0 || lat > 84.0) return ''
             var bandIdx = Math.floor((lat + 80.0) / 8);
             return bands.charAt(bandIdx) || 'X'; // cover extra X band
         }
@@ -624,12 +590,10 @@
                 southHemi = bands.indexOf(band.toUpperCase()) < nBandIdx;
             }
 
-            //check_UTMinput(utm.x, utm.y, utm.zone, southHemi);
             var latlon = new Array(2);
             UTMXYToLatLon(utm.x, utm.y, utm.zone, southHemi, latlon);
-            //check_latlon(latlon);
-            if (Math.abs(latlon[0]) > pi/2)  return null;
-            return { lat: RadToDeg(latlon[0]), lng: RadToDeg(latlon[1]) };
+            if (Math.abs(latlon[0]) > pi/2) return null;
+            return {lat: RadToDeg(latlon[0]), lng: RadToDeg(latlon[1])};
         }
 
         function LatLon2UTM(lat, lon, zone, southHemi) {
@@ -652,8 +616,8 @@
         }
 
         return {
-            LatLon2UTM:LatLon2UTM,
-            UTM2LatLon:UTM2LatLon,
+            LatLon2UTM: LatLon2UTM,
+            UTM2LatLon: UTM2LatLon,
         };
     }
 
