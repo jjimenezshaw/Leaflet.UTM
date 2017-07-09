@@ -2,18 +2,20 @@
   "name": "leaflet.utm",
   "version": "0.0.1",
   "description": "converts LatLng to UTM WGS84",
-  "main": "L.Map.UTM.js",
+  "main": "L.LatLng.UTM.js",
   "directories": {
     "test": "test"
   },
+  "license": "BSD-3-Clause",
   "scripts": {
-    "lint": "eslint L.Map.UTM.js examples/* test/*",
+    "lint": "eslint L.LatLng.UTM.js examples/* test/*",
     "spec": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html",
-    "test": "npm run lint && npm run spec"
+    "test": "npm run lint && npm run spec",
+    "release": "mversion patch -m"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jjimenezshaw/Leaflet.UTM.git"
+    "url": "git+https://github.com/jjimenezshaw/Leaflet.UTM.git"
   },
   "keywords": [
     "Leaflet",
@@ -27,11 +29,14 @@
     "chai-leaflet": "0.0.12",
     "eslint": "^2.10.2",
     "eslint-plugin-html": "^1.4.0",
-    "leaflet": "^1.0.3",
     "mocha": "^2.4.5",
     "mocha-phantomjs-core": "^2.0.1",
+    "mversion": "^1.10.0",
     "phantomjs-prebuilt": "^2.1.4",
     "proj4": "2.4.3"
+  },
+  "dependencies": {
+    "leaflet": "^1.0.3"
   },
   "author": "Javier Jimenez Shaw",
   "contributors": [
