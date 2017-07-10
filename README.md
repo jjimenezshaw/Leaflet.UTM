@@ -38,7 +38,7 @@ You can also specify the hemisphere if you don't know the band, with `southHemi`
 
 ## API
 ### `L.LatLng.utm`
-Extends the class `L.LatLng` with the method `utm([zone, southHemi])`. If zone is not provided, or 0, it is computed based on latitude and longitude (recommended). If southHemi is not provided or null, it is computed based on latitude. This method returns an object of class `L.Utm`.
+Extends the class `L.LatLng` with the method `utm([zone, [southHemi]])`. If zone is not provided, or 0, it is computed based on latitude and longitude (recommended). If southHemi is not provided or null, it is computed based on latitude. This method returns an object of class `L.Utm`.
 
 ### `L.Utm`
 Defines a class to deal with UTM coordinates. The available methods are:
