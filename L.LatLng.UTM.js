@@ -17,17 +17,31 @@
         this.southHemi = southHemi;
     };
 
+    L.Utm.setDefaultOptions = function(o) {
+        // o can be an object or a function
+        L.Utm.prototype._defaultOptions = o;
+    };
+
     L.Utm.prototype = {
         // convert to string. Using the options you can
         // specify another format.
         toString: function(options) {
-            options = L.extend({
+            var def = {
                 decimals: 1,
                 sep: ',',
                 format: '{x}{sep} {y}{sep} {zone}{band}{sep} {datum}',
                 north: 'North',
                 south: 'South'
-            }, options);
+            };
+
+            if (this._defaultOptions) {
+                // The user has the posibility to change the default options
+                var aux = this._defaultOptions;
+                if (typeof aux === 'function') aux = aux(options, def);
+                def = L.extend(def, aux);
+            }
+
+            options = L.extend(def, options);
 
             var o = this.dic();
             o.x = o.x.toFixed(options.decimals);

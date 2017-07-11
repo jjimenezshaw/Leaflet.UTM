@@ -36,3 +36,22 @@ var formats = [
         north: '+', south: '-', format: '{x} {y} {hemi}{zone}',
         txt: '0.0 1.0 +2'},
 ];
+
+var defOptions = [
+    {msg: 'Default values',
+        x: 0, y: 1, zone: 2, band: 'C', southHemi: true,
+        txt: '0..1',
+        defTxt: '',
+        defO: function() {return {format: '{x}..{y}', decimals: 0};}},
+    {msg: 'Some options and format',
+        x: 0, y: 1, zone: 2, band: 'C', southHemi: true,
+        format: '{y}{sep} {x}{sep} {zone} {band} {hemi}',
+        txt: '1.00| 0.00| 2 C South',
+        defTxt: '1.0, 0.0, 2 C South',
+        defO: function() {return {decimals: 2, sep: '|'};}},
+    {msg: 'Object',
+        x: 0, y: 1, zone: 2, band: 'C', southHemi: true,
+        txt: '0..1',
+        defTxt: '',
+        defO: {format: '{x}..{y}', decimals: 0}},
+];

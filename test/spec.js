@@ -13,6 +13,7 @@ function compProj4(ll, utm, margin) {
 
 describe('L.UTM', function() {
     chai.should();
+    //this.timeout(500000);
 
     describe('Functions in place', function() {
 
@@ -84,6 +85,27 @@ describe('L.UTM', function() {
             var bad = L.utm({x: 0, y: 1e9, zone: 31, southHemi: false});
             chai.should().equal(null, bad.latLng());
         });
+    });
+
+    describe('def Options', function() {
+        it('default Options (' + defOptions.length + ')', function() {
+            defOptions.forEach(function(item) {
+                L.Utm.setDefaultOptions(item.defO);
+                var utm = L.utm(item);
+                utm.toString(item).should.be.equal(item.txt, item.msg);
+                L.Utm.setDefaultOptions(null);
+            });
+        });
+
+        it('Empty default Options (' + defOptions.length + ')', function() {
+            L.Utm.setDefaultOptions({format: ''});
+            defOptions.forEach(function(item) {
+                var utm = L.utm(item);
+                utm.toString(item).should.be.equal(item.defTxt, item.msg);
+            });
+            L.Utm.setDefaultOptions(null); //disable to not corrupt the next!
+        });
+
     });
 
     describe('Fixtures', function() {
