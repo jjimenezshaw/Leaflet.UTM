@@ -75,6 +75,11 @@ Creates a copy of itself.
 #### Factory `L.utm(...)` 
 Creates an utm object. Accepts an object with attribures: x, y, zone, band, southHemi. This method does not check that input values make sense. You can set values far away from the proper zone, or wrong band. This may be obviously a problem when you call `latLng()` method. Values out of the zone but near work perfectly. Use the method `normalize()` to normalize it, or simply to check the input.
 
+#### `L.Utm.setDefaultOptions(opts)`
+This function changes the default options for the `toString` method. It is a global function (see that you must call it with the capital U), to modify globally the options for any object created.
+You can call it with an object or a function. To return to the 'factory values', just call it with `null`.
+Use it at the begining of your code if you prefer using another format for the UTM representation.
+
 ## Running tests
 Install dependencies and run tests:
 ```
