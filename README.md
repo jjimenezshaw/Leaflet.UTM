@@ -12,7 +12,7 @@ Based on javascript code from http://home.hiwaay.net/~taylorc/toolbox/geography/
 [Simple example in action](https://jjimenezshaw.github.io/Leaflet.UTM/examples/input.html)
 
 ## Installation
-To be done, once it is finished.
+Using npm for browserify npm install leaflet.utm (and require('leaflet.utm')), or just download L.LatLng.UTM.js and add a script tag for it in you html.
 
 ## Usage
 ### LatLng -> UTM
