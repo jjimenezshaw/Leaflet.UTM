@@ -67,12 +67,29 @@ describe('L.UTM', function() {
             utm.should.have.property('band').equal('T');
             utm.should.have.property('southHemi').equal(false);
         });
+        it('Wrap lon', function() {
+            var u1 = L.latLng(15, 12).utm();
+            var u2 = L.latLng(15, 12 + 360).utm();
+            u1.should.have.property('x').closeTo(u2['x'], 0.001);
+            u1.should.have.property('y').closeTo(u2['y'], 0.001);
+            u1.should.have.property('zone').equal(u2['zone']);
+            u1.should.have.property('band').equal(u2['band']);
+            u1.should.have.property('southHemi').equal(u2['southHemi']);
+        });
+        it('Limit zone values', function() {
+            var u1 = L.latLng(15, -180).utm();
+            var u2 = L.latLng(15, 180).utm();
+            u1.should.have.property('zone').equal(1);
+            u2.should.have.property('zone').equal(60);
+        });
     });
 
     describe('Exceptions and nulls', function() {
         it('Exceptions', function() {
             var utm = L.utm({x: 0, y: 0, zone: 31});
-            (function() {utm.latLng();}).should.throw(Error);
+            (function() {
+                utm.latLng();
+            }).should.throw(Error);
             (function() {utm.latLng(true);}).should.not.throw(Error);
             chai.should().equal(null, utm.latLng(true));
         });

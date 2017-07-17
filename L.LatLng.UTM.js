@@ -121,7 +121,7 @@
     L.LatLng.prototype.utm = function(zone, southHemi) {
         var dic = UC().LatLon2UTM(
             this.lat,
-            L.Util.wrapNum(this.lng, [-180, 180], true),
+            this.lng,
             zone,
             southHemi);
         return L.utm(dic);
@@ -611,6 +611,15 @@
         }
 
         function LatLon2UTM(lat, lon, zone, southHemi) {
+            function wrapLon(x) {
+                // don't use L.Util.wrapNum to be 0.7 compatible
+                var max = 180,
+                    min = -180,
+                    d = max - min;
+                return x === max ? x : ((x - min) % d + d) % d + min;
+            }
+
+            lon = wrapLon(lon);
             var band = calcBand(lat);
             zone = zone || calcZone(band, lon);
             southHemi = (southHemi === undefined || southHemi === null) ?
