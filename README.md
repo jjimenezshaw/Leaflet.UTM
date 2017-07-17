@@ -1,7 +1,7 @@
 # Leaflet.UTM
 [![Build Status](https://travis-ci.org/jjimenezshaw/Leaflet.UTM.png)](https://travis-ci.org/jjimenezshaw/Leaflet.UTM)
 
-Simple [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (WGS84) methods for L.LatLng. Tested with Leaflet 1.0.3 and Leaflet 1.1.0.
+Simple [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (WGS84) methods for L.LatLng. Tested with Leaflet 0.7, 1.0.3 and 1.1.0.
 
 Based on javascript code from Chuck Taylor's [Toolbox](http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html).
 
