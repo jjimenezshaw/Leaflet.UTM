@@ -8,7 +8,7 @@ Based on javascript code from Chuck Taylor's [Toolbox](http://home.hiwaay.net/~t
 [Simple example in action](https://jjimenezshaw.github.io/Leaflet.UTM/examples/input.html)
 
 ## Installation
-Using npm for browserify npm install leaflet.utm (and require('leaflet.utm')), or just download L.LatLng.UTM.js and add a script tag for it in you html.
+Using npm for browserify npm install leaflet.utm (and require('leaflet.utm')), or just download L.LatLng.UTM.js and add a script tag for it in your html.
 
 ## Usage
 ### LatLng -> UTM
