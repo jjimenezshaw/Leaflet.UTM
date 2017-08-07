@@ -35,7 +35,7 @@
     "phantomjs-prebuilt": "^2.1.4",
     "proj4": "2.4.3"
   },
-  "dependencies": {
+  "peerDependencies": {
     "leaflet": "^1.0.3"
   },
   "author": "Javier Jimenez Shaw",
