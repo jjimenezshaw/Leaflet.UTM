@@ -1,8 +1,11 @@
 # Leaflet.UTM
-[![Build Status](https://travis-ci.org/jjimenezshaw/Leaflet.UTM.png)](https://travis-ci.org/jjimenezshaw/Leaflet.UTM)
-[![NPM version](https://img.shields.io/npm/v/leaflet.utm.svg)](https://www.npmjs.com/package/leaflet.utm) ![Leaflet 0.7 compatible!](https://img.shields.io/badge/Leaflet%200.7-%E2%9C%93-1EB300.svg?style=flat) ![Leaflet 1.x compatible!](https://img.shields.io/badge/Leaflet%201.x-%E2%9C%93-1EB300.svg?style=flat)
+[![Build Status](https://travis-ci.org/jjimenezshaw/Leaflet.UTM.svg)](https://travis-ci.org/jjimenezshaw/Leaflet.UTM)
+[![NPM version](https://img.shields.io/npm/v/leaflet.utm.svg)](https://www.npmjs.com/package/leaflet.utm)
+[![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg?style=flat)](LICENSE)
+[![Leaflet 0.7 compatible!](https://img.shields.io/badge/Leaflet%200.7-%E2%9C%93-1EB300.svg?style=flat)](http://leafletjs.com/reference-0.7.7.html)
+[![Leaflet 1.x compatible!](https://img.shields.io/badge/Leaflet%201.x-%E2%9C%93-1EB300.svg?style=flat)](http://leafletjs.com/reference.html)
 
-Simple [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (WGS84) methods for L.LatLng. Tested with Leaflet 0.7, 1.0.3 and 1.1.0.
+Simple [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (WGS84) methods for L.LatLng. Tested with Leaflet 0.7, 1.0.3, 1.1.0 and 1.2.0.
 
 Based on javascript code from Chuck Taylor's [Toolbox](http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html).
 
