@@ -28,13 +28,13 @@
     "blanket": "^1.2.3",
     "chai": "~4.1.0",
     "chai-leaflet": "^0.0.13",
-    "eslint": "^4.3.0",
-    "eslint-plugin-html": "^3.1.1",
-    "leaflet": "^1.0.3",
+    "eslint": "^4.5.0",
+    "eslint-plugin-html": "^3.2.0",
+    "leaflet": "^1.2.0",
     "mocha": "^3.5.0",
     "mocha-phantomjs-core": "^2.1.2",
     "mversion": "^1.10.1",
-    "phantomjs-prebuilt": "^2.1.1",
+    "phantomjs-prebuilt": "^2.1.15",
     "proj4": "2.4.3"
   },
   "peerDependencies": {
@@ -42,8 +42,7 @@
   },
   "author": "Javier Jimenez Shaw",
   "contributors": [
-    {
-    }
+    {}
   ],
   "readmeFilename": "README.md"
 }
