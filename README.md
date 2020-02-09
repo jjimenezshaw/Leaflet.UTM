@@ -5,7 +5,7 @@
 [![Leaflet 0.7 compatible!](https://img.shields.io/badge/Leaflet%200.7-%E2%9C%93-1EB300.svg?style=flat)](http://leafletjs.com/reference-0.7.7.html)
 [![Leaflet 1.x compatible!](https://img.shields.io/badge/Leaflet%201.x-%E2%9C%93-1EB300.svg?style=flat)](http://leafletjs.com/reference.html)
 
-Simple [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (WGS84) methods for L.LatLng. Tested with Leaflet 0.7, 1.0.3, 1.1.0, 1.2.0 and 1.3.1.
+Simple [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (WGS84) methods for L.LatLng. Tested with Leaflet 0.7, 1.0.3, 1.1.0, 1.2.0, 1.3.1 and 1.6.0.
 
 Based on javascript code from Chuck Taylor's [Toolbox](http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html).
 
@@ -27,6 +27,15 @@ You can use a personalized format like here:
 var txt = map.getCenter().utm().toString({decimals: 0, format: '{x} {y} {zone} {hemi}'});
 ```
 that produces `467486 4101149 30 North`
+
+You can also use the values of that `object` directly (like `c.utm().x`). Here is a dump in the Console:
+```JavaScript
+L.Utm {x: 467486.3402722592,
+       y: 4101149.337496558,
+       zone: 30,
+       band: "S",
+       southHemi: false}
+```
 
 ### UTM -> LatLng
 Just create an object with `L.utm(options)`, and call the method `latLng` like here:
