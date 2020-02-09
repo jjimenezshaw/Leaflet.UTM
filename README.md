@@ -28,6 +28,15 @@ var txt = map.getCenter().utm().toString({decimals: 0, format: '{x} {y} {zone} {
 ```
 that produces `467486 4101149 30 North`
 
+You can also use the values of that `object` directly (like `c.utm().x`). Here is a dump in the Console:
+```JavaScript
+L.Utm {x: 467486.3402722592,
+       y: 4101149.337496558,
+       zone: 30,
+       band: "S",
+       southHemi: false}
+```
+
 ### UTM -> LatLng
 Just create an object with `L.utm(options)`, and call the method `latLng` like here:
 ```JavaScript
