@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es6"
+    ],
+    "module": "commonjs",
+    "noEmit": true
+  },
+  "files": [
+    "./node_modules/leaflet.utm/L.LatLng.UTM.d.ts"
+  ],
+  "include": [
+    "**/*.ts"
+  ]
+}
