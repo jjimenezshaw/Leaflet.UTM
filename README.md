@@ -1,5 +1,5 @@
 # Leaflet.UTM
-[![Build Status](https://travis-ci.org/jjimenezshaw/Leaflet.UTM.svg)](https://travis-ci.org/jjimenezshaw/Leaflet.UTM)
+[![CI](https://github.com/jjimenezshaw/Leaflet.UTM/actions/workflows/main.yml/badge.svg)](https://github.com/jjimenezshaw/Leaflet.UTM/actions/workflows/main.yml)
 [![NPM version](https://img.shields.io/npm/v/leaflet.utm.svg)](https://www.npmjs.com/package/leaflet.utm)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg?style=flat)](LICENSE)
 [![Leaflet 0.7 compatible!](https://img.shields.io/badge/Leaflet%200.7-%E2%9C%93-1EB300.svg?style=flat)](http://leafletjs.com/reference-0.7.7.html)
