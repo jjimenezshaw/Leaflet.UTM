@@ -35,7 +35,7 @@
             };
 
             if (this._defaultOptions) {
-                // The user has the posibility to change the default options
+                // The user has the possibility to change the default options
                 var aux = this._defaultOptions;
                 if (typeof aux === 'function') aux = aux(options, def);
                 def = L.extend(def, aux);

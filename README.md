@@ -66,7 +66,7 @@ Converts the UTM coordinates into a string. The available options are:
   * sep: separator used in the format. Default ','
   * north: string used in the format for field `{hemi}` in the north hemisphere. Default 'North'.
   * south: string used in the format for field `{hemi}` in the south hemisphere. Default 'South'
-  
+
 This method is automatically used by javascript when need to convert to string, for instance, when adding to another string.
 
 #### `latLng()`
@@ -81,8 +81,8 @@ Compares the object with `other`. It compares the lat and lng values, not the ut
 #### `clone()`
 Creates a copy of itself.
 
-#### Factory `L.utm(...)` 
-Creates an utm object. Accepts an object with attribures: x, y, zone, band, southHemi. This method does not check that input values make sense. You can set values far away from the proper zone, or wrong band. This may be obviously a problem when you call `latLng()` method. Values out of the zone but near work perfectly. Use the method `normalize()` to normalize it, or simply to check the input.
+#### Factory `L.utm(...)`
+Creates an utm object. Accepts an object with attributes: x, y, zone, band, southHemi. This method does not check that input values make sense. You can set values far away from the proper zone, or wrong band. This may be obviously a problem when you call `latLng()` method. Values out of the zone but near work perfectly. Use the method `normalize()` to normalize it, or simply to check the input.
 
 #### `L.Utm.setDefaultOptions(opts)`
 This function changes the default options for the `toString` method. It is a global function (see that you must call it with the capital U), to modify globally the options for any object created.
@@ -91,7 +91,7 @@ Use it at the begining of your code if you prefer using another format for the U
 
 ## Running tests
 Install dependencies and run tests:
-```
+```sh
 npm install && npm test
 ```
 or load `test/index.html` in your browser after installing the dependencies by running `npm install`.

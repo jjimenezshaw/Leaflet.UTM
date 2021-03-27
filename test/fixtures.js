@@ -1,7 +1,6 @@
 var data1 = [
     {lat: 0, lng: 0, x: 166021.443, y: 0, zone: 31, band: 'N', southHemi: false, margin: 0.001},
     {lat: 0, lng: 3, x: 500000, y: 0, zone: 31, band: 'N', southHemi: false, margin: 0.001},
-     
 ];
 
 var formats = [
