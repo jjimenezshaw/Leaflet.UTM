@@ -1,8 +1,8 @@
-.github
+.*
 .travis.yml
 .vscode
-bower.json
+eslint.*
 examples
 package-lock.json
 test
-test-types
+tsconfig.json

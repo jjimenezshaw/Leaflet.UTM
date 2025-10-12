@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "es6"],
+    "module": "commonjs",
+    "noEmit": true
+  },
+  "files": [
+    "./L.LatLng.UTM.d.ts"
+  ],
+  "include": ["**/*.ts"],
+  "exclude": ["dist"]
+}

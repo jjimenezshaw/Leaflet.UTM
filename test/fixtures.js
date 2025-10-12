@@ -54,3 +54,9 @@ var defOptions = [
         defTxt: '',
         defO: {format: '{x}..{y}', decimals: 0}},
 ];
+
+module.exports = {
+    data1: data1,
+    formats: formats,
+    defOptions: defOptions,
+};
