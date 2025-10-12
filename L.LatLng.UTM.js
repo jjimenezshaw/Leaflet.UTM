@@ -1,9 +1,18 @@
-/*
- * Extends L.LatLng to convert easily to UTM WGS84 coordinates
- * and print with the desired format
- */
+(function(global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined'
+        ? factory(exports, require('leaflet'))
+        : typeof define === 'function' && define.amd
+            ? define(['exports', 'leaflet'], factory)
+            : (global = typeof globalThis !== 'undefined'
+                ? globalThis
+                : global || self, factory(global.LayersTree = {}, global.L));
+})(this, (function(_exports, L) { 'use strict';
 
-(function(L) {
+    /*
+     * Extends L.LatLng to convert easily to UTM WGS84 coordinates
+     * and print with the desired format
+     */
+
     if (typeof L === 'undefined') {
         throw new Error('Leaflet must be included first');
     }
@@ -31,7 +40,7 @@
                 sep: ',',
                 format: '{x}{sep} {y}{sep} {zone}{band}{sep} {datum}',
                 north: 'North',
-                south: 'South'
+                south: 'South',
             };
 
             if (this._defaultOptions) {
@@ -68,7 +77,7 @@
         equals: function(other) {
             try {
                 return this.latLng().equals(other.latLng());
-            } catch (e) {
+            } catch (_e) {
                 return false;
             }
         },
@@ -87,7 +96,7 @@
                 y: this.y,
                 zone: this.zone,
                 band: this.band,
-                southHemi: this.southHemi
+                southHemi: this.southHemi,
             };
             if (eastingNorthing) {
                 ret.easting = this.x;
@@ -98,7 +107,7 @@
 
         clone: function() {
             return L.utm(this);
-        }
+        },
     };
 
     // factory to create Utm instances.
@@ -563,7 +572,7 @@
         var nBandIdx = bands.indexOf('N');
 
         function calcBand(lat) {
-            if (lat < -80.0 || lat > 84.0) return ''
+            if (lat < -80.0 || lat > 84.0) return '';
             var bandIdx = Math.floor((lat + 80.0) / 8);
             return bands.charAt(bandIdx) || 'X'; // cover extra X band
         }
@@ -633,7 +642,7 @@
                 y: xy[1],
                 zone: zone,
                 band: band,
-                southHemi: southHemi
+                southHemi: southHemi,
             };
             return ret;
         }
@@ -644,4 +653,4 @@
         };
     }
 
-})(L);
+}));
