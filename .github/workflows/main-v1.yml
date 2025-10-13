@@ -18,7 +18,14 @@ jobs:
     strategy:
       matrix:
         leaflet-version:
-          - '2.0.0-alpha.1'
+          - '0.7'
+          - '1.0'
+          - '1.1'
+          - '1.2'
+          - '1.3'
+          - '1.6'
+          - '1.7'
+          - '1.9'
 
     steps:
       - name: Checkout branch
@@ -49,5 +56,5 @@ jobs:
         run: npm install --no-save leaflet@~${{ matrix.leaflet-version }}
 
       - name: Run tests
-        run: npm run test
+        run: npm run test:v1
         timeout-minutes: 2

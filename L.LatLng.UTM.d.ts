@@ -31,7 +31,7 @@ declare module 'leaflet' {
         static setDefaultOptions(options?: UtmStringOptions | toStringOptionsFn): void;
 
         clone(): Utm;
-        dic(eastingNorthing?: boolean): UtmPoint;
+        dic(eastingNorthing?: boolean): Utm;
         equals(point: Utm): boolean;
         latLng(ignoreError?: boolean): L.LatLng | null | never;
         normalize(): Utm | null;
@@ -50,10 +50,10 @@ declare module 'leaflet' {
         zone?: number,
         band?: string,
         southHemi?: boolean
-    ): Utm | null;
+    ): Utm | null | undefined;
 
     // declared as L.LatLng.prototype.utm
     interface LatLng {
-        utm(zone?: number, southHemi?: boolean): Utm;
+        utm(zone?: number, southHemi?: boolean): Utm | null | undefined;
     }
 }

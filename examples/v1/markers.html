@@ -4,20 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Leaflet UTM Demo - Markers</title>
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" />
+    <title>Leaflet (v1) UTM Demo - Markers</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.19.10/proj4.js"></script>
-    <script type="importmap">
-        {
-            "imports": {
-                "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
-                "UTM": "../UTM.js"
-            }
-        }
-    </script>
+
+    <script src="../../L.LatLng.UTM.js"></script>
 
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; }
@@ -36,12 +29,10 @@
     <div id="res"></div>
     <div id="map"></div>
 
-    <script type="module">
-        import {Map, Marker, TileLayer} from 'leaflet';
+    <script type="text/javascript">
+        var center = [37.056019, -3.365688];
 
-        const center = [37.056019, -3.365688];
-
-        const options = {
+        var options = {
             attribution:
                 '<a href="http://openstreetmap.org/copyright"</a> &copy; ' +
                 'OpenStreetmap Contributors',
@@ -50,26 +41,26 @@
             maxZoom: 20,
         };
 
-        const osm = new TileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', options);
+        var osm = new L.TileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', options);
 
-        const map = new Map('map', {
+        var map = new L.Map('map', {
             layers: [osm],
             center: center,
             zoom: 14,
         });
 
-        const fun = function(t) {
-            const opts = document.getElementById('opts').value;
-            const opt = JSON.parse(opts);
+        var fun = function(t) {
+            var opts = document.getElementById('opts').value;
+            var opt = JSON.parse(opts);
             t.bindPopup(t.getLatLng().utm().toString(opt), {autoClose: false}).openPopup();
 
             // update last point info
 
-            const p = t.getLatLng();
-            const o = t.getLatLng().utm();
-            const other = o.latLng();
+            var p = t.getLatLng();
+            var o = t.getLatLng().utm();
+            var other = o.latLng();
 
-            let txt = '';
+            var txt = '';
             txt += 'Original: ' + p.toString(10) + '<br>';
             txt += 'UTM-latLng: ' + other.toString(10) + '<br>';
             txt += 'UTM: ' + p.utm().toString(opt) + '<br>';
@@ -77,17 +68,17 @@
             txt += 'Original == UTM-latLng: ' + p.equals(other) + '<br>';
 
             // for proj4
-            const utm = '+proj=utm +zone=' + o.zone + (o.southHemi ? '+south' : '');
-            const wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
-            const pj = proj4(wgs84, utm, [t.getLatLng().lng, t.getLatLng().lat]);
+            var utm = '+proj=utm +zone=' + o.zone + (o.southHemi ? '+south' : '');
+            var wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+            var pj = proj4(wgs84, utm, [t.getLatLng().lng, t.getLatLng().lat]);
             txt += 'proj4: ' + pj[0] + ', ' + pj[1] + '<br>';
-            const margin = Math.max(Math.abs(o.x - pj[0]), Math.abs(o.y - pj[1]));
+            var margin = Math.max(Math.abs(o.x - pj[0]), Math.abs(o.y - pj[1]));
             txt += 'proj4 == UTM (< 0.001): ' + (margin < 0.001) + ' | err: ' + margin;
             document.getElementById('res').innerHTML = txt;
         };
 
-        const create = function(ll) {
-            const marker = new Marker(ll, {draggable: true}).addTo(map);
+        var create = function(ll) {
+            var marker = new L.Marker(ll, {draggable: true}).addTo(map);
             marker.on('dblclick', function() {
                 map.removeLayer(marker);
             });

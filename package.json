@@ -14,9 +14,12 @@
     "lint:ts": "eslint --config eslint.config-ts.mjs *.ts",
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:fix": "npm run lint:js -- --fix",
+    "spec:js:v1": "mocha -r jsdom-global/register test/v1/spec.js",
     "spec:js": "mocha -r jsdom-global/register test/spec.js",
     "spec:ts": "tsc",
+    "spec:v1": "npm run spec:js:v1 && npm run spec:ts",
     "spec": "npm run spec:js && npm run spec:ts",
+    "test:v1": "npm run lint && npm run spec:v1",
     "test": "npm run lint && npm run spec"
   },
   "repository": {
@@ -39,7 +42,7 @@
     "http-server": "^14.1.1",
     "jsdom": "27.0.0",
     "jsdom-global": "3.0.2",
-    "leaflet": "^1.9.4",
+    "leaflet": "^2.0.0-alpha.1",
     "mocha": "^11.7.4",
     "proj4": "^2.19.10",
     "rollup-plugin-delete": "^3.0.1",
@@ -49,7 +52,7 @@
     "typescript-eslint": "^8.46.0"
   },
   "peerDependencies": {
-    "leaflet": "^1.0.3"
+    "leaflet": ">=0.7.0"
   },
   "author": "Javier Jimenez Shaw",
   "readmeFilename": "README.md"

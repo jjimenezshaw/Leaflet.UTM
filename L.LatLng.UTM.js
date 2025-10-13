@@ -63,12 +63,12 @@
         },
 
         // returns a L.LatLng object
-        latLng: function(noExcep) {
+        latLng: function(ignoreError) {
             try {
                 var ll = UC().UTM2LatLon(this);
                 return L.latLng(ll);
             } catch (e) {
-                if (noExcep) return null;
+                if (ignoreError) return null;
                 throw e;
             }
         },
