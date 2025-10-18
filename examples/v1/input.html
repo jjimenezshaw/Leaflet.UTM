@@ -4,17 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Leaflet UTM Demo - Input</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" />
+    <title>Leaflet (v1) UTM Demo - Input</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js"></script>
 
-    <script type="importmap">
-        {
-            "imports": {
-                "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
-                "UTM": "../UTM.js"
-            }
-        }
-    </script>
+    <script src="../../L.LatLng.UTM.js"></script>
 
     <style type="text/css">
         html { font-family: Helvetica, Verdana, Arial, sans-serif; }
@@ -67,35 +61,32 @@
 
     <div id="center">
 
-    <script type="module">
-        import L from 'leaflet';
-        import {Utm} from 'UTM';
-
-        const el1 = document.forms.frm1.elements;
-        const el2 = document.forms.frm2.elements;
+    <script type="text/javascript">
+        var el1 = document.forms.frm1.elements;
+        var el2 = document.forms.frm2.elements;
 
         function toUTMBtn() {
             document.getElementById('result1').innerHTML = '---';
-            const ll = new L.LatLng(el1.lat.value, el1.lng.value);
-            const point = ll.utm();
-            marker.setLatLng(ll).bindPopup(point + '<br>' + ll).openPopup();
-            el2.x.value = point.x.toFixed(1);
-            el2.y.value = point.y.toFixed(1);
-            el2.zone.value = point.zone;
-            el2.band.value = point.band;
-            el2.southHemi.value = point.southHemi;
-            document.getElementById('result1').innerHTML = '' + point;
+            var ll = new L.LatLng(el1.lat.value, el1.lng.value);
+            var utm = ll.utm();
+            marker.setLatLng(ll).bindPopup(utm + '<br>' + ll).openPopup();
+            el2.x.value = utm.x.toFixed(1);
+            el2.y.value = utm.y.toFixed(1);
+            el2.zone.value = utm.zone;
+            el2.band.value = utm.band;
+            el2.southHemi.value = utm.southHemi;
+            document.getElementById('result1').innerHTML = '' + utm;
         }
         document.getElementById('btn1').addEventListener('click', toUTMBtn);
 
         function toLatLngBtn() {
             document.getElementById('result2').innerHTML = '---';
-            const sh = el2.southHemi.value.toLowerCase();
-            const southHemi = ['true', 'y', 'yes', '1'].indexOf(sh) > -1 ? true : false;
-            const point = new Utm(el2.x.value, el2.y.value, el2.zone.value, el2.band.value, southHemi);
-            const ll = point.latLng();
+            var sh = el2.southHemi.value.toLowerCase();
+            var southHemi = ['true', 'y', 'yes', '1'].indexOf(sh) > -1 ? true : false;
+            var utm = new L.Utm(el2.x.value, el2.y.value, el2.zone.value, el2.band.value, southHemi);
+            var ll = utm.latLng();
             if (ll) {
-                marker.setLatLng(ll).bindPopup(point + '<br>' + ll).openPopup();
+                marker.setLatLng(ll).bindPopup(utm + '<br>' + ll).openPopup();
                 el1.lat.value = ll.lat.toFixed(6);
                 el1.lng.value = ll.lng.toFixed(6);
                 document.getElementById('result2').innerHTML = '' + ll;
@@ -103,7 +94,7 @@
         }
         document.getElementById('btn2').addEventListener('click', toLatLngBtn);
 
-        const options = {
+        var options = {
             attribution:
                 '<a href="https://openstreetmap.org/copyright"</a> &copy; ' +
                 'OpenStreetmap Contributors',
@@ -112,13 +103,13 @@
             maxZoom: 19,
         };
 
-        const osm = new L.TileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', options);
-        const map = new L.Map('map', {layers: [osm], center: [0, 0], zoom: 2});
-        const marker = new L.Marker([0, 0]).addTo(map);
+        var osm = new L.TileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', options);
+        var map = new L.Map('map', {layers: [osm], center: [0, 0], zoom: 2});
+        var marker = new L.Marker([0, 0]).addTo(map);
         toUTMBtn();
 
         map.on('move', function() {
-            const c = map.getCenter();
+            var c = map.getCenter();
             document.getElementById('center').innerHTML = c + '<br>UTM: ' + c.utm();
         });
         map.fire('move');

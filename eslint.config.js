@@ -6,15 +6,6 @@ module.exports = [
     {ignores: ['**/dist**']},
     eslintJS.configs.recommended,
     {
-        files: ['test/**'],
-        languageOptions: {
-            globals: {
-                ...globals.mocha,
-                ...globals.jest,
-            },
-        },
-    },
-    {
         files: ['**/*.js', '**/*.mjs', '**/*.html'],
         languageOptions: {
             globals: {

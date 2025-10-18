@@ -4,9 +4,7 @@
     "module": "commonjs",
     "noEmit": true
   },
-  "files": [
-    "./L.LatLng.UTM.d.ts"
-  ],
+  "files": ["./L.LatLng.UTM.d.ts", "./UTM.d.ts"],
   "include": ["**/*.ts"],
   "exclude": ["dist"]
 }
