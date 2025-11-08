@@ -24,30 +24,23 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v5
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Use Node.js 22.x
         uses: actions/setup-node@v6
         with:
           node-version: 22.x
-
-      - name: Cache node modules
-        uses: actions/cache@v4
-        env:
-          cache-name: cache-node-modules-${{ matrix.leaflet-version }}
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --prefer-offline --frozen-lockfile
 
       - name: Install leaflet ${{ matrix.leaflet-version }}
-        run: npm install --no-save leaflet@~${{ matrix.leaflet-version }}
+        run: pnpm add leaflet@~${{ matrix.leaflet-version }}
 
       - name: Run tests
-        run: npm run test
+        run: pnpm test
         timeout-minutes: 2
