@@ -5,14 +5,14 @@
 [![Leaflet 0.7 compatible!](https://img.shields.io/badge/Leaflet%200.7-%E2%9C%93-1EB300.svg?style=flat)](http://leafletjs.com/reference-0.7.7.html)
 [![Leaflet 1.x compatible!](https://img.shields.io/badge/Leaflet%201.x-%E2%9C%93-1EB300.svg?style=flat)](http://leafletjs.com/reference.html)
 
-Simple [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (WGS84) methods for L.LatLng. Tested with Leaflet 0.7, 1.0.3, 1.1.0, 1.2.0, 1.3.1, 1.6.0 and 1.7.1.
+Simple [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (WGS84) methods for L.LatLng. Tested with Leaflet 0.7, 1.0.3, 1.1.0, 1.2.0, 1.3.1, 1.6.0, 1.9.0 and 2.0.0-alpha.1.
 
 Based on javascript code from Chuck Taylor's [Toolbox](http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html).
 
 [Simple example in action](https://jjimenezshaw.github.io/Leaflet.UTM/examples/input.html)
 
 ## Installation
-Using npm for browserify npm install leaflet.utm (and require('leaflet.utm')), or just download L.LatLng.UTM.js and add a script tag for it in your html.
+Using npm for browserify `npm install leaflet.utm` (and `require('leaflet.utm')`), or just download `L.LatLng.UTM.js` and add a script tag for it in your html.
 
 ## Usage
 ### LatLng -> UTM
@@ -87,11 +87,11 @@ Creates an utm object. Accepts an object with attributes: x, y, zone, band, sout
 #### `L.Utm.setDefaultOptions(opts)`
 This function changes the default options for the `toString` method. It is a global function (see that you must call it with the capital U), to modify globally the options for any object created.
 You can call it with an object or a function. To return to the 'factory values', just call it with `null`.
-Use it at the begining of your code if you prefer using another format for the UTM representation.
+Use it at the beginning of your code if you prefer using another format for the UTM representation.
 
 ## Running tests
 Install dependencies and run tests:
 ```sh
-npm install && npm test
+pnpm install && pnpm test
 ```
-or load `test/index.html` in your browser after installing the dependencies by running `npm install`.
+or load `test/index.html` in your browser after installing the dependencies by running `pnpm install`.

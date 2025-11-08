@@ -2,5 +2,6 @@
 eslint.*
 examples
 package-lock.json
+pnpm-lock.yaml
 test
 tsconfig.json
