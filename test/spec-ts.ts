@@ -12,33 +12,33 @@ Utm.setDefaultOptions(options);
 
 let utmPoint: Utm;
 
-utmPoint = new LatLng(0, 0).utm();
-utmPoint = new LatLng(0, 0).utm(31);
-utmPoint = new LatLng(0, 0).utm(31, false);
-utmPoint = utm(0, 0, 31);
-utmPoint = utm(0, 0, 31, 'T');
-utmPoint = utm(0, 0, 31, 'T', false);
-utmPoint = utm(utm(0, 0));
-utmPoint = utm({x: 0, y: 0, zone: 31});
-utmPoint = utm(utmPoint.x, utmPoint.y, utmPoint.zone, utmPoint.band, utmPoint.southHemi);
+utmPoint = new LatLng(0, 0).utm() as Utm;
+utmPoint = new LatLng(0, 0).utm(31) as Utm;
+utmPoint = new LatLng(0, 0).utm(31, false) as Utm;
+utmPoint = utm(0, 0, 31) as Utm;
+utmPoint = utm(0, 0, 31, 'T') as Utm;
+utmPoint = utm(0, 0, 31, 'T', false) as Utm;
+utmPoint = utm(utm(0, 0) as Utm) as Utm;
+utmPoint = utm({x: 0, y: 0, zone: 31}) as Utm;
+utmPoint = utm(utmPoint.x, utmPoint.y, utmPoint.zone, utmPoint.band, utmPoint.southHemi) as Utm;
 
 utmPoint = utmPoint.clone();
-utmPoint = utmPoint.normalize();
+utmPoint = utmPoint.normalize() as Utm;
 
 let obj: Utm;
 obj = utmPoint.dic();
 obj = utmPoint.dic(true);
-utmPoint = utm(obj);
+utmPoint = utm(obj) as Utm;
 
-const value: boolean = utmPoint.equals(utm(0, 0, 31));
+const value: boolean = utmPoint.equals(utm(0, 0, 31) as Utm);
 value === true;
 
 const text: string = utmPoint.toString({decimals: 1});
 text !== '';
 
 let llPoint: LatLng;
-llPoint = utmPoint.latLng();
-llPoint = utmPoint.latLng(true);
-utmPoint = llPoint.utm();
-utmPoint = llPoint.utm(utmPoint.zone);
-utmPoint = llPoint.utm(utmPoint.zone, utmPoint.southHemi);
+llPoint = utmPoint.latLng() as LatLng;
+llPoint = utmPoint.latLng(true) as LatLng;
+utmPoint = llPoint.utm() as Utm;
+utmPoint = llPoint.utm(utmPoint.zone) as Utm;
+utmPoint = llPoint.utm(utmPoint.zone, utmPoint.southHemi) as Utm;
